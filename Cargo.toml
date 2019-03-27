@@ -1,0 +1,8 @@
+[package]
+name = "ralf"
+version = "0.1.0"
+authors = ["Markus Akesson <macke.95_06@hotmail.com>"]
+edition = "2018"
+
+[dependencies]
+clap = "2.32.0"
