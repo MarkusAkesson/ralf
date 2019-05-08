@@ -1,5 +1,6 @@
 use clap::{App, AppSettings, Arg, ArgMatches, SubCommand};
 use ralf::elfheader::ElfHeader;
+use ralf::objdump::objdump;
 use ralf::strings::strings;
 use std::fs::File;
 use std::io::Read;
@@ -8,7 +9,7 @@ const MIN_LEN: u32 = 4;
 
 fn main() {
     let matches = App::new("Ralf")
-        .author("Markus AAkesson")
+        .author("Markus Akesson")
         .about("Program to handle binary files")
         .setting(AppSettings::SubcommandRequiredElseHelp)
         .subcommand(
@@ -30,11 +31,18 @@ fn main() {
                         .takes_value(true),
                 ),
         )
+        .subcommand(
+            SubCommand::with_name("objdump")
+                .about("prints the binarys instructions")
+                .setting(AppSettings::ArgRequiredElseHelp)
+                .arg(Arg::with_name("file").required(true).takes_value(true)),
+        )
         .get_matches();
 
     match matches.subcommand() {
         ("readelf", Some(args)) => run_readelf(args),
         ("strings", Some(args)) => run_strings(args),
+        ("objdump", Some(args)) => run_objdump(args),
         _ => unreachable!(),
     }
 }
@@ -60,6 +68,13 @@ fn run_strings(args: &ArgMatches) {
     };
 
     strings(min_len, &buffer);
+}
+
+fn run_objdump(args: &ArgMatches) {
+    let path = args.value_of("file").unwrap();
+    let mut buffer = Vec::new();
+    read_from_file(path, &mut buffer);
+    objdump(&buffer);
 }
 
 fn read_from_file(path: &str, buffer: &mut Vec<u8>) {

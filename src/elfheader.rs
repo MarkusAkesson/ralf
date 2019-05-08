@@ -81,7 +81,7 @@ impl fmt::Display for OSABI {
                 OSABI::OpenBSD => "OpenBSD",
                 OSABI::OpenVMS => "OpenVMS",
                 OSABI::NonStopKernel => "NonStop Kernel",
-                OSABI::AROS => "AORS",
+                OSABI::AROS => "AROS",
                 OSABI::FenixOS => "Fenix OS",
                 OSABI::CloudABI => "CloudABI",
                 OSABI::Unknown => "Unknown",
