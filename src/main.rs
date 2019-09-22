@@ -35,7 +35,13 @@ fn main() {
             SubCommand::with_name("objdump")
                 .about("prints the binarys instructions")
                 .setting(AppSettings::ArgRequiredElseHelp)
-                .arg(Arg::with_name("file").required(true).takes_value(true)),
+                .arg(
+                    Arg::with_name("file")
+                        .long("file")
+                        .short("f")
+                        .required(true)
+                        .takes_value(true),
+                ),
         )
         .get_matches();
 
